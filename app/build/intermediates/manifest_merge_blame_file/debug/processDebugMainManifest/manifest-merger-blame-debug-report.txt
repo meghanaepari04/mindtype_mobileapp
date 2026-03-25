@@ -1,0 +1,465 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mindtype.mobile"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Permissions -->
+12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+12-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:5:5-77
+12-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:5:22-74
+13    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+13-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:6:5-89
+13-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:6:22-86
+14    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+14-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:7:5-81
+14-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:7:22-78
+15    <uses-permission android:name="android.permission.VIBRATE" />
+15-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:8:5-66
+15-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:8:22-63
+16    <uses-permission android:name="android.permission.BODY_SENSORS" />
+16-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:9:5-71
+16-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:9:22-68
+17    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+17-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:10:5-77
+17-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:10:22-74
+18    <uses-permission
+18-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:11:5-12:38
+19        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+19-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:11:22-78
+20        android:maxSdkVersion="28" />
+20-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:12:9-35
+21    <uses-permission
+21-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:13:5-14:38
+22        android:name="android.permission.READ_EXTERNAL_STORAGE"
+22-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:13:22-77
+23        android:maxSdkVersion="32" />
+23-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:14:9-35
+24    <uses-permission android:name="android.permission.WAKE_LOCK" />
+24-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:23:5-68
+24-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:23:22-65
+25    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+25-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:24:5-79
+25-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:24:22-76
+26
+27    <permission
+27-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+28        android:name="com.mindtype.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+28-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+29        android:protectionLevel="signature" />
+29-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+30
+31    <uses-permission android:name="com.mindtype.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Explicitly NOT requested: READ_CONTACTS, CAMERA, RECORD_AUDIO, ACCESS_FINE_LOCATION, READ_SMS -->
+31-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+31-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+32    <application
+32-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:17:5-95:19
+33        android:allowBackup="true"
+33-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:18:9-35
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.12.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/bb8276727144926654648e33693ef2e7/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+35        android:debuggable="true"
+36        android:extractNativeLibs="false"
+37        android:icon="@mipmap/ic_launcher"
+37-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:19:9-43
+38        android:label="@string/app_name"
+38-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:20:9-41
+39        android:roundIcon="@mipmap/ic_launcher_round"
+39-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:21:9-54
+40        android:supportsRtl="true"
+40-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:22:9-35
+41        android:testOnly="true"
+42        android:theme="@style/Theme.MindType"
+42-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:23:9-46
+43        android:usesCleartextTraffic="false" >
+43-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:24:9-45
+44
+45        <!-- Onboarding: first-launch activity -->
+46        <activity
+46-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:27:9-35:20
+47            android:name="com.mindtype.mobile.ui.OnboardingActivity"
+47-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:28:13-50
+48            android:exported="true"
+48-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:29:13-36
+49            android:windowSoftInputMode="adjustResize" >
+49-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:30:13-55
+50            <intent-filter>
+50-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:31:13-34:29
+51                <action android:name="android.intent.action.MAIN" />
+51-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:32:17-69
+51-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:32:25-66
+52
+53                <category android:name="android.intent.category.LAUNCHER" />
+53-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:33:17-77
+53-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:33:27-74
+54            </intent-filter>
+55        </activity>
+56
+57        <!-- Main Dashboard -->
+58        <activity
+58-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:38:9-41:58
+59            android:name="com.mindtype.mobile.ui.MainActivity"
+59-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:39:13-44
+60            android:exported="false"
+60-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:40:13-37
+61            android:windowSoftInputMode="adjustResize" />
+61-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:41:13-55
+62
+63        <!-- Settings -->
+64        <activity
+64-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:44:9-46:40
+65            android:name="com.mindtype.mobile.ui.SettingsActivity"
+65-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:45:13-48
+66            android:exported="false" />
+66-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:46:13-37
+67
+68        <!-- ===== IME SERVICE ===== -->
+69        <service
+69-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:49:9-64:19
+70            android:name="com.mindtype.mobile.ime.MindTypeIMEService"
+70-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:50:13-51
+71            android:exported="true"
+71-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:51:13-36
+72            android:foregroundServiceType="specialUse"
+72-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:54:13-55
+73            android:label="@string/app_name"
+73-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:52:13-45
+74            android:permission="android.permission.BIND_INPUT_METHOD" >
+74-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:53:13-70
+75            <intent-filter>
+75-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:55:13-57:29
+76                <action android:name="android.view.InputMethod" />
+76-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:56:17-67
+76-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:56:25-64
+77            </intent-filter>
+78
+79            <meta-data
+79-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:58:13-60:56
+80                android:name="android.view.im"
+80-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:59:17-47
+81                android:resource="@xml/mindtype_ime" />
+81-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:60:17-53
+82
+83            <property
+83-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:61:13-63:53
+84                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+84-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:62:17-76
+85                android:value="Stress Monitoring" />
+85-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:63:17-50
+86        </service>
+87
+88        <!-- ===== FILE PROVIDER for CSV export ===== -->
+89        <provider
+90            android:name="androidx.core.content.FileProvider"
+90-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:68:13-62
+91            android:authorities="com.mindtype.mobile.fileprovider"
+91-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:69:13-64
+92            android:exported="false"
+92-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:70:13-37
+93            android:grantUriPermissions="true" >
+93-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:71:13-47
+94            <meta-data
+94-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:72:13-74:63
+95                android:name="android.support.FILE_PROVIDER_PATHS"
+95-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:73:17-67
+96                android:resource="@xml/file_provider_paths" />
+96-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:74:17-60
+97        </provider>
+98
+99        <!-- Boot receiver for WorkManager -->
+100        <receiver
+100-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:78:9-84:20
+101            android:name="com.mindtype.mobile.workers.BootReceiver"
+101-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:79:13-49
+102            android:exported="true" >
+102-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:80:13-36
+103            <intent-filter>
+103-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:81:13-83:29
+104                <action android:name="android.intent.action.BOOT_COMPLETED" />
+104-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:82:17-79
+104-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:82:25-76
+105            </intent-filter>
+106        </receiver>
+107
+108        <!-- Stress response receiver for notification action buttons -->
+109        <receiver
+109-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:87:9-93:20
+110            android:name="com.mindtype.mobile.workers.StressResponseReceiver"
+110-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:88:13-59
+111            android:exported="false" >
+111-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:89:13-37
+112            <intent-filter>
+112-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:90:13-92:29
+113                <action android:name="com.mindtype.mobile.STRESS_RESPONSE" />
+113-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:91:17-78
+113-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:91:25-75
+114            </intent-filter>
+115        </receiver>
+116
+117        <provider
+117-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+118            android:name="androidx.startup.InitializationProvider"
+118-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+119            android:authorities="com.mindtype.mobile.androidx-startup"
+119-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+120            android:exported="false" >
+120-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+121            <meta-data
+121-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+122                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+122-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+123                android:value="androidx.startup" />
+123-->[androidx.emoji2:emoji2:1.2.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/daccc4f58cdf560467395b9e888889f1/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+124            <meta-data
+124-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:34:13-36:52
+125                android:name="androidx.work.WorkManagerInitializer"
+125-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:35:17-68
+126                android:value="androidx.startup" />
+126-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:36:17-49
+127            <meta-data
+127-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/376fe4131a22fa31acf198ad60bc6c86/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+128                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+128-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/376fe4131a22fa31acf198ad60bc6c86/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+129                android:value="androidx.startup" />
+129-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/376fe4131a22fa31acf198ad60bc6c86/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+130            <meta-data
+130-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+131                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+132                android:value="androidx.startup" />
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+133        </provider>
+134
+135        <service
+135-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:39:9-45:35
+136            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+136-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:40:13-88
+137            android:directBootAware="false"
+137-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:41:13-44
+138            android:enabled="@bool/enable_system_alarm_service_default"
+138-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:42:13-72
+139            android:exported="false" />
+139-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:43:13-37
+140        <service
+140-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:46:9-52:35
+141            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+141-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:47:13-84
+142            android:directBootAware="false"
+142-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:48:13-44
+143            android:enabled="@bool/enable_system_job_service_default"
+143-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:49:13-70
+144            android:exported="true"
+144-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:50:13-36
+145            android:permission="android.permission.BIND_JOB_SERVICE" />
+145-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:51:13-69
+146        <service
+146-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:53:9-59:35
+147            android:name="androidx.work.impl.foreground.SystemForegroundService"
+147-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:54:13-81
+148            android:directBootAware="false"
+148-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:55:13-44
+149            android:enabled="@bool/enable_system_foreground_service_default"
+149-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:56:13-77
+150            android:exported="false" />
+150-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:57:13-37
+151
+152        <receiver
+152-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:61:9-66:35
+153            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+153-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:62:13-88
+154            android:directBootAware="false"
+154-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:63:13-44
+155            android:enabled="true"
+155-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:64:13-35
+156            android:exported="false" />
+156-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:65:13-37
+157        <receiver
+157-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:67:9-77:20
+158            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+158-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:68:13-106
+159            android:directBootAware="false"
+159-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:69:13-44
+160            android:enabled="false"
+160-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:70:13-36
+161            android:exported="false" >
+161-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:71:13-37
+162            <intent-filter>
+162-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:73:13-76:29
+163                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+163-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:74:17-87
+163-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:74:25-84
+164                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+164-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:75:17-90
+164-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:75:25-87
+165            </intent-filter>
+166        </receiver>
+167        <receiver
+167-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:78:9-88:20
+168            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+168-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:79:13-104
+169            android:directBootAware="false"
+169-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:80:13-44
+170            android:enabled="false"
+170-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:81:13-36
+171            android:exported="false" >
+171-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:82:13-37
+172            <intent-filter>
+172-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:84:13-87:29
+173                <action android:name="android.intent.action.BATTERY_OKAY" />
+173-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:85:17-77
+173-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:85:25-74
+174                <action android:name="android.intent.action.BATTERY_LOW" />
+174-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:86:17-76
+174-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:86:25-73
+175            </intent-filter>
+176        </receiver>
+177        <receiver
+177-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:89:9-99:20
+178            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+178-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:90:13-104
+179            android:directBootAware="false"
+179-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:91:13-44
+180            android:enabled="false"
+180-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:92:13-36
+181            android:exported="false" >
+181-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:93:13-37
+182            <intent-filter>
+182-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:95:13-98:29
+183                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+183-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:96:17-83
+183-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:96:25-80
+184                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+184-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:97:17-82
+184-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:97:25-79
+185            </intent-filter>
+186        </receiver>
+187        <receiver
+187-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:100:9-109:20
+188            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+188-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:101:13-103
+189            android:directBootAware="false"
+189-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:102:13-44
+190            android:enabled="false"
+190-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:103:13-36
+191            android:exported="false" >
+191-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:104:13-37
+192            <intent-filter>
+192-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:106:13-108:29
+193                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+193-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:107:17-79
+193-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:107:25-76
+194            </intent-filter>
+195        </receiver>
+196        <receiver
+196-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:110:9-121:20
+197            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+197-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:111:13-88
+198            android:directBootAware="false"
+198-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:112:13-44
+199            android:enabled="false"
+199-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:113:13-36
+200            android:exported="false" >
+200-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:114:13-37
+201            <intent-filter>
+201-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:116:13-120:29
+202                <action android:name="android.intent.action.BOOT_COMPLETED" />
+202-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:82:17-79
+202-->/Users/meghanaepari/dev/mindtype_mobileapp/app/src/main/AndroidManifest.xml:82:25-76
+203                <action android:name="android.intent.action.TIME_SET" />
+203-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:118:17-73
+203-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:118:25-70
+204                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+204-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:119:17-81
+204-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:119:25-78
+205            </intent-filter>
+206        </receiver>
+207        <receiver
+207-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:122:9-131:20
+208            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+208-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:123:13-99
+209            android:directBootAware="false"
+209-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:124:13-44
+210            android:enabled="@bool/enable_system_alarm_service_default"
+210-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:125:13-72
+211            android:exported="false" >
+211-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:126:13-37
+212            <intent-filter>
+212-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:128:13-130:29
+213                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+213-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:129:17-98
+213-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:129:25-95
+214            </intent-filter>
+215        </receiver>
+216        <receiver
+216-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:132:9-142:20
+217            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+217-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:133:13-78
+218            android:directBootAware="false"
+218-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:134:13-44
+219            android:enabled="true"
+219-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:135:13-35
+220            android:exported="true"
+220-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:136:13-36
+221            android:permission="android.permission.DUMP" >
+221-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:137:13-57
+222            <intent-filter>
+222-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:139:13-141:29
+223                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+223-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:140:17-88
+223-->[androidx.work:work-runtime:2.9.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/7f769da05f9a5f6fba82e7aa83723802/transformed/work-runtime-2.9.0/AndroidManifest.xml:140:25-85
+224            </intent-filter>
+225        </receiver>
+226
+227        <service
+227-->[androidx.room:room-runtime:2.6.1] /Users/meghanaepari/.gradle/caches/8.13/transforms/2878b81a418584156277495b4361b4d4/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+228            android:name="androidx.room.MultiInstanceInvalidationService"
+228-->[androidx.room:room-runtime:2.6.1] /Users/meghanaepari/.gradle/caches/8.13/transforms/2878b81a418584156277495b4361b4d4/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+229            android:directBootAware="true"
+229-->[androidx.room:room-runtime:2.6.1] /Users/meghanaepari/.gradle/caches/8.13/transforms/2878b81a418584156277495b4361b4d4/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+230            android:exported="false" />
+230-->[androidx.room:room-runtime:2.6.1] /Users/meghanaepari/.gradle/caches/8.13/transforms/2878b81a418584156277495b4361b4d4/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+231
+232        <receiver
+232-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+233            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+233-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+234            android:directBootAware="false"
+234-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+235            android:enabled="true"
+235-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+236            android:exported="true"
+236-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+237            android:permission="android.permission.DUMP" >
+237-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+238            <intent-filter>
+238-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+239                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+240            </intent-filter>
+241            <intent-filter>
+241-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+242                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+243            </intent-filter>
+244            <intent-filter>
+244-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+245                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+246            </intent-filter>
+247            <intent-filter>
+247-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+248                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/meghanaepari/.gradle/caches/8.13/transforms/4b97320fb3e664c3759dfdfe83da202a/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+249            </intent-filter>
+250        </receiver>
+251    </application>
+252
+253</manifest>

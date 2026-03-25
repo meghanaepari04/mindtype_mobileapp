@@ -1,0 +1,403 @@
+
+PRODUCT REQUIREMENTS DOCUMENT
+MindType Mobile
+Mental State Detection Using Keystroke Dynamics — Android Application
+
+Version 1.0  |  March 25, 2026
+VIT-AP University, Andhra Pradesh, India
+Department of Networking and Security
+Supervisor: Dr. Udit Narayana Kar
+E Meghana (22BCE8217)  |  Anushree Das (22BCE9076)  |  Shaik Madina Asfiya (22BCE9699)
+
+
+1. Document Control
+Field	Details
+Document Title	MindType Mobile — Product Requirements Document
+Version	1.0 (Initial Release)
+Status	Draft — Under Supervisor Review
+Date	March 25, 2026
+Authors	E Meghana, Anushree Das, Shaik Madina Asfiya
+Supervisor	Dr. Udit Narayana Kar
+Department	Networking and Security, VIT-AP University
+Target Platform	Android (API Level 26+, Android 8.0 Oreo and above)
+App Category	Research / Behavioral Biometric / Wellness
+Privacy Classification	Privacy-Preserving — No PII or text content stored
+
+1.1 Revision History
+Version	Date	Changes	Author
+1.0	March 25, 2026	Initial PRD created	E Meghana, A Das, SM Asfiya
+
+
+
+2. Executive Summary
+MindType Mobile is an Android application that passively monitors a user's mental stress state by analyzing how they type on their smartphone — specifically the timing patterns of keystrokes — rather than what they type. It is the mobile extension of the MindType desktop application, which has already been built and deployed for Windows.
+
+The application operates as a custom Android keyboard (Input Method Editor) that runs silently in the background during normal phone usage. It captures keystroke timing metadata including dwell time, flight time, typing speed, touch pressure, touch area, and device gyroscope readings. This data is processed locally on the device using a TensorFlow Lite machine learning model to classify the user's stress level in real time as Calm, Mild Stress, or High Stress.
+
+The system is designed for an academic research context. Its primary goal is to collect a labeled dataset of keystroke features paired with self-reported stress scores, which will be used to train and evaluate machine learning models. A secondary goal is to provide real-time stress awareness feedback to participants during the data collection period.
+
+Privacy is a core design principle. No typed text content is ever recorded or stored. Only timing metadata in milliseconds is captured. All inference runs on-device with no data transmitted to external servers.
+
+Target Users
+20–30 Participants	Data Collection
+2–3 Days / User	ML Output Classes
+3 (Calm / Mild / High)	Features Extracted
+9 Behavioral Features
+
+
+
+3. Problem Statement & Goals
+3.1 Problem Statement
+Mental stress among students and working professionals is widespread but rarely monitored continuously. Existing stress assessment methods — such as psychological surveys, HR check-ins, and wearable biosensors — are either infrequent, intrusive, expensive, or unsuitable for passive monitoring during daily activities.
+
+Most people spend a significant portion of their day typing on mobile devices. Research in behavioral biometrics indicates that cognitive and emotional states directly influence motor behavior, including typing rhythm. Stress and cognitive fatigue manifest as changes in typing speed, key hold durations, inter-key gaps, and even touch pressure. These signals can be passively captured without interrupting the user.
+
+There is currently no lightweight, privacy-preserving Android application that continuously monitors mental stress through keystroke dynamics and provides real-time feedback — while also collecting a properly labeled dataset suitable for machine learning research.
+
+3.2 Goals
+Primary Goals
+•Build a functional Android IME (custom keyboard) that passively captures keystroke timing metadata without recording typed content
+•Collect a labeled dataset of keystroke features paired with self-reported stress scores from 20+ participants over 2-3 days each
+•Deploy a TensorFlow Lite model on-device to provide real-time stress classification
+•Export a clean, structured CSV dataset for ML model training and research analysis
+
+Secondary Goals
+•Provide participants with real-time stress awareness feedback (Green/Yellow/Red indicator)
+•Visualize stress trends over time in a simple dashboard
+•Compare model performance between personalized (per-user) and generalized (all-user) approaches
+•Validate system reliability against self-reported ground truth labels
+
+
+
+4. Stakeholders
+Stakeholder	Role	Needs & Expectations
+Research Team	Developers & Analysts	Build the app, collect data, train and evaluate ML models, publish findings
+Supervisor (Dr. Udit Narayana Kar)	Academic Guide	Ensure research quality, ethical compliance, and academic rigor
+Participants (Students/Professionals)	Data Contributors	Easy-to-use app, clear privacy assurance, minimal disruption to daily routine
+VIT-AP University	Institutional Authority	IRB / ethical compliance, academic contribution, institutional credit
+Future Researchers	Dataset Consumers	Well-documented dataset, reproducible methodology, open benchmarks
+
+
+
+5. Scope
+5.1 In Scope
+•Custom Android keyboard (IME) built using InputMethodService
+•Keystroke timing capture: keyCode, downTime, eventTime, touch pressure, touch size
+•Gyroscope data capture for hand tremor analysis
+•Feature extraction engine: 9 behavioral features per 60-second window
+•Local SQLite database using Room for all data storage
+•Periodic stress self-report popup via WorkManager (every 10 minutes)
+•On-device TensorFlow Lite stress classification model
+•Real-time visual feedback overlay (Green / Yellow / Red)
+•Stress trend dashboard showing patterns over time
+•CSV export of labeled dataset to device Downloads folder
+•User ID anonymization system (U01, U02...)
+•Android APK distribution for research participants
+
+5.2 Out of Scope
+•iOS / iPhone version (Android only for this research phase)
+•Cloud storage or remote data sync
+•Clinical or medical diagnosis — this is a research tool only
+•Recording, storing, or transmitting any typed text content
+•Public app store (Google Play) distribution in this phase
+•Multi-language keyboard support beyond default system language
+•Integration with third-party wellness apps or health platforms
+
+
+
+6. User Personas
+Persona 1 — Research Participant (Primary User)
+Attribute	Description
+Name	Priya (typical college student)
+Age	19–24 years
+Device	Android smartphone (mid-range)
+Tech Comfort	Moderate — comfortable installing APKs, enabling keyboard settings
+Goal	Participate in the study, contribute data, receive stress insights
+Pain Points	Doesn't want app to read messages; dislikes intrusive notifications
+Expectation	Simple setup, clear privacy guarantee, easy to forget it's running
+
+Persona 2 — Researcher / Developer (Secondary User)
+Attribute	Description
+Name	Meghana (project team member)
+Role	Builds the app, manages data collection, trains ML models
+Goal	Collect clean, labeled keystroke data; export CSV for model training
+Needs	Reliable data logging, accurate timestamps, easy export mechanism
+Tools	Android Studio, Python (ML), TensorFlow Lite
+
+
+
+7. Functional Requirements
+Requirements are classified using MoSCoW prioritization: MUST (critical), SHOULD (high value), COULD (nice to have).
+
+FR-1: User Onboarding & Setup
+ID	Requirement	Priority	Status
+FR-1.1	App shall display an onboarding screen explaining the study purpose and privacy policy on first launch	MUST	TODO
+FR-1.2	User shall enter a User ID (e.g., U01) before data collection begins	MUST	TODO
+FR-1.3	App shall guide the user through enabling MindType as the default keyboard in Android Settings	MUST	TODO
+FR-1.4	App shall detect whether MindType IME is set as default keyboard and prompt the user if not	MUST	TODO
+FR-1.5	App shall display a privacy assurance screen confirming no text content is stored	MUST	TODO
+
+FR-2: Keystroke Capture (IME Service)
+ID	Requirement	Priority	Status
+FR-2.1	The IME service shall intercept all key press and release events via onKeyDown() and onKeyUp()	MUST	TODO
+FR-2.2	The system shall record downTime and eventTime (in milliseconds) for every key event	MUST	TODO
+FR-2.3	The system shall record touch pressure (0.0–1.0) and touch contact size from MotionEvent	MUST	TODO
+FR-2.4	The system shall record keyCode for each event to identify backspace/delete events (KEYCODE_DEL)	MUST	TODO
+FR-2.5	The actual character typed shall NEVER be stored in any form — only key codes and timestamps	MUST	TODO
+FR-2.6	The IME service shall continue running as a foreground service across app switches	MUST	TODO
+FR-2.7	The system shall capture gyroscope sensor readings at 50Hz during active typing sessions	SHOULD	TODO
+
+FR-3: Feature Extraction Engine
+ID	Requirement	Priority	Status
+FR-3.1	System shall compute dwell_time for each key event as: dwell = eventTime - downTime	MUST	TODO
+FR-3.2	System shall compute flight_time between consecutive events as: flight = current.downTime - prev.eventTime	MUST	TODO
+FR-3.3	System shall compute typing_speed as keys per minute over a sliding 60-second window	MUST	TODO
+FR-3.4	System shall compute backspace_rate as ratio of KEYCODE_DEL events to total events per window	MUST	TODO
+FR-3.5	System shall compute pause_count as number of inter-key gaps exceeding 2000ms per window	MUST	TODO
+FR-3.6	System shall compute mean and standard deviation of dwell_time and flight_time per window	MUST	TODO
+FR-3.7	System shall compute mean_pressure and pressure_variance from touch pressure readings per window	MUST	TODO
+FR-3.8	System shall compute gyro_std as standard deviation of gyroscope Z-axis readings per window	SHOULD	TODO
+FR-3.9	Feature vectors shall be assembled and stored in the feature_windows table every 60 seconds	MUST	TODO
+
+FR-4: Data Storage
+ID	Requirement	Priority	Status
+FR-4.1	All data shall be stored locally on-device using Room Database (SQLite) — no cloud storage	MUST	TODO
+FR-4.2	Database shall contain tables: users, sessions, keystroke_events, stress_labels, feature_windows	MUST	TODO
+FR-4.3	All database write operations shall be performed asynchronously (Kotlin coroutines) to avoid UI blocking	MUST	TODO
+FR-4.4	User ID and session configuration shall be stored in SharedPreferences	MUST	TODO
+FR-4.5	Each session shall be assigned a unique UUID and stored with start/end timestamps	MUST	TODO
+
+FR-5: Stress Label Collection
+ID	Requirement	Priority	Status
+FR-5.1	WorkManager shall schedule a stress prompt popup every 10 minutes during active sessions	MUST	TODO
+FR-5.2	Popup shall display: 'How stressed do you feel right now?' with options 1 (Calm) to 5 (Very Stressed)	MUST	TODO
+FR-5.3	Popup shall auto-dismiss after 30 seconds if the user does not respond; no label saved for that window	MUST	TODO
+FR-5.4	Submitted score (1–5) shall be mapped to class: 1–2 = Calm, 3 = Mild Stress, 4–5 = High Stress	MUST	TODO
+FR-5.5	Both the raw score and mapped class label shall be stored in the stress_labels table	MUST	TODO
+
+FR-6: ML Inference (On-Device)
+ID	Requirement	Priority	Status
+FR-6.1	A TensorFlow Lite model file (.tflite) shall be bundled in the app assets folder	MUST	TODO
+FR-6.2	The model shall accept a 9-feature float array as input and return a 3-class probability vector	MUST	TODO
+FR-6.3	Inference shall be triggered every 60 seconds after each feature window is assembled	MUST	TODO
+FR-6.4	Predicted class and confidence score shall be stored in the feature_windows table	SHOULD	TODO
+FR-6.5	Inference shall run entirely on-device; no feature data shall be sent to any server	MUST	TODO
+
+FR-7: Feedback & Dashboard
+ID	Requirement	Priority	Status
+FR-7.1	App shall display a persistent notification showing current stress level (Green/Yellow/Red dot)	MUST	TODO
+FR-7.2	Main dashboard shall display a line chart of stress level over the last 24 hours	SHOULD	TODO
+FR-7.3	Dashboard shall display: total keystrokes today, session duration, and average stress level	SHOULD	TODO
+FR-7.4	App shall display a wellness tip when stress level transitions from Calm to High Stress	COULD	TODO
+
+FR-8: Data Export
+ID	Requirement	Priority	Status
+FR-8.1	App shall provide an Export Data button in the settings screen	MUST	TODO
+FR-8.2	Export shall generate mindtype_mobile_dataset.csv containing: user_id, session_id, timestamp, all 9 features, raw_score, mapped_class, predicted_class	MUST	TODO
+FR-8.3	CSV file shall be saved to the device Downloads folder using FileProvider	MUST	TODO
+FR-8.4	App shall display a share sheet allowing the user to send the CSV via email or cloud drive	MUST	TODO
+
+
+
+8. Non-Functional Requirements
+Category	Requirement	Specification
+Performance	Keystroke logging latency	< 5ms from key event to DB write (async)
+Performance	Feature extraction time	< 200ms per 60-second window
+Performance	TFLite inference time	< 50ms per inference call
+Privacy	Text content storage	Zero tolerance — no characters stored under any condition
+Privacy	Network transmissions	No outbound network calls during data collection
+Reliability	Data loss on crash	All DB writes async with rollback; < 1 event lost per session on crash
+Reliability	IME service uptime	Service must survive app backgrounding via foreground service notification
+Usability	Setup time	User should be fully set up within 3 minutes of installing APK
+Usability	Popup intrusiveness	Popup must auto-dismiss; must not block typing or foreground app
+Compatibility	Android version	API 26+ (Android 8.0 Oreo and above)
+Compatibility	Device types	Phones only (tablets out of scope for v1)
+Battery	Background battery usage	< 3% additional battery drain per hour during active capture
+Storage	Local storage per participant	< 50MB for a full 3-day data collection session
+Security	Database access	Room DB stored in app-private internal storage, not accessible to other apps
+
+
+
+9. System Architecture Overview
+MindType Mobile follows a layered architecture with all processing and storage performed on-device. There are no external API calls or backend servers. The architecture consists of six layers:
+
+#	Layer	Components
+1	Input Layer	MindTypeIMEService (InputMethodService) — captures KeyEvent and MotionEvent
+2	Processing Layer	FeatureExtractor (windowing + 9-feature computation), GyroscopeManager
+3	Storage Layer	Room Database (5 tables), SharedPreferences (User ID, config)
+4	ML Inference Layer	StressClassifier wrapping TensorFlow Lite Interpreter, model bundled in assets/
+5	Feedback Layer	FeedbackOverlay (Green/Yellow/Red), StressTrendChart, WellnessTipService
+6	Export Layer	DataExporter, FileProvider, Android ShareSheet for CSV delivery
+
+9.1 Key Android Components
+Component	Type	Purpose
+MindTypeIMEService	InputMethodService	Core keyboard service — captures all keystroke events
+FeatureExtractor	Kotlin Class	Computes 9 behavioral features per time window
+AppDatabase	Room Database	SQLite wrapper for all local data storage
+StressClassifier	TFLite Wrapper	Loads model, runs inference, returns StressLevel enum
+StressLabelWorker	WorkManager Worker	Schedules and displays stress self-report popups
+DataExporter	Kotlin Class	Queries DB, writes CSV, triggers Android ShareSheet
+FeedbackOverlay	Notification / View	Persistent stress indicator in notification bar
+
+
+
+10. Data Schema
+10.1 keystroke_events Table
+Column	Type	Description
+event_id	INTEGER (PK)	Auto-incremented primary key
+session_id	TEXT (FK)	References sessions table
+user_id	TEXT (FK)	References users table
+timestamp	INTEGER	Unix timestamp in milliseconds
+key_code	INTEGER	Android KeyEvent key code (no character stored)
+down_time	INTEGER	System time when key was pressed (ms)
+event_time	INTEGER	System time when key was released (ms)
+dwell_time	REAL	Computed: event_time - down_time (ms)
+flight_time	REAL	Computed: this.down_time - prev.event_time (ms)
+touch_pressure	REAL	MotionEvent.getPressure() value (0.0–1.0)
+touch_size	REAL	MotionEvent.getSize() value
+is_backspace	INTEGER	1 if KEYCODE_DEL, 0 otherwise
+
+10.2 feature_windows Table
+Column	Type	Description
+window_id	INTEGER (PK)	Auto-incremented primary key
+session_id	TEXT (FK)	References sessions table
+window_start	INTEGER	Start timestamp of the 60-second window
+window_end	INTEGER	End timestamp of the 60-second window
+mean_dwell	REAL	Mean dwell time over window (ms)
+std_dwell	REAL	Standard deviation of dwell time (ms)
+mean_flight	REAL	Mean flight time over window (ms)
+std_flight	REAL	Standard deviation of flight time (ms)
+typing_speed	REAL	Keys per minute in this window
+backspace_rate	REAL	Ratio of backspace events to total events
+pause_count	INTEGER	Number of gaps > 2000ms in this window
+mean_pressure	REAL	Mean touch pressure value
+gyro_std	REAL	Std dev of gyroscope Z-axis readings
+predicted_class	TEXT	TFLite output: Calm / Mild_Stress / High_Stress
+stress_label	TEXT	Self-reported class (if available for this window)
+
+
+
+11. Android Permissions Required
+Permission	Type	Justification
+BIND_INPUT_METHOD	System	Required to register MindTypeIMEService as a keyboard
+FOREGROUND_SERVICE	Normal	Keep IME service alive when device is in use
+RECEIVE_BOOT_COMPLETED	Normal	Restart WorkManager jobs after device reboot
+WRITE_EXTERNAL_STORAGE	Dangerous	Required to save CSV to Downloads folder (API < 29)
+VIBRATE	Normal	Brief vibration on stress prompt popup
+BODY_SENSORS (Gyroscope)	Dangerous	Capture gyroscope data for hand tremor analysis
+POST_NOTIFICATIONS	Runtime (API 33+)	Show persistent stress indicator notification
+
+Note: The app explicitly does NOT request READ_CONTACTS, CAMERA, RECORD_AUDIO, ACCESS_FINE_LOCATION, or READ_SMS permissions. This supports the privacy-preserving design claim.
+
+
+
+12. Key User Flows
+12.1 First-Time Setup Flow
+1.User installs MindType APK on Android phone
+2.Launch app → Welcome screen with study description appears
+3.User reads privacy notice (no text stored) → taps 'I Understand'
+4.User enters assigned User ID (e.g., U01) → taps 'Start'
+5.App displays keyboard setup guide → user navigates to Settings
+6.User enables MindType in Language & Input → Manage Keyboards
+7.User sets MindType as default keyboard
+8.App detects IME is active → shows 'You're all set!' confirmation
+9.Data collection begins silently in background
+
+12.2 Active Data Collection Flow (Runs continuously)
+10.User types on phone in any app (WhatsApp, browser, notes, etc.)
+11.MindTypeIMEService captures each key event (timing only, no text)
+12.Every 60 seconds: FeatureExtractor assembles feature vector
+13.StressClassifier runs TFLite inference → outputs stress class
+14.Persistent notification updates with Green / Yellow / Red dot
+15.Every 10 minutes: stress popup appears → user selects 1–5 rating
+16.Popup auto-dismisses if ignored → session continues uninterrupted
+
+12.3 Data Export Flow
+17.After 2–3 days: user opens MindType app → taps 'Export Data'
+18.DataExporter queries Room DB for all sessions, events, labels, windows
+19.CSV is generated and saved to Downloads/mindtype_mobile_dataset.csv
+20.Android ShareSheet appears → user shares via Gmail / Google Drive
+21.Researcher receives CSV for ML model training
+
+
+
+13. Machine Learning Requirements
+13.1 Model Input / Output Specification
+Attribute	Specification
+Input shape	[1 x 9] float32 array (9 features per window)
+Feature order	mean_dwell, std_dwell, mean_flight, std_flight, typing_speed, backspace_rate, pause_count, mean_pressure, gyro_std
+Output shape	[1 x 3] float32 probability vector
+Output classes	Index 0 = Calm, Index 1 = Mild_Stress, Index 2 = High_Stress
+Model format	TensorFlow Lite (.tflite), quantized for mobile
+Model file location	app/src/main/assets/mindtype_model.tflite
+Inference trigger	Every 60 seconds after FeatureExtractor completes
+Normalization	Features normalized using min-max scaler trained on dataset
+
+13.2 Baseline Models to Evaluate
+Model	Type	Notes
+Logistic Regression	Baseline	Interpretable; establishes lower-bound accuracy
+SVM (RBF Kernel)	Baseline	Good for small datasets; robust to outliers
+Random Forest	Ensemble	Feature importance analysis; handles noise well
+XGBoost	Ensemble	Typically best on tabular data; expected top performer
+LSTM	Deep Learning	Captures temporal patterns; requires more data
+
+13.3 Evaluation Metrics
+•Accuracy — overall correct predictions / total predictions
+•Precision (per class) — true positives / (true positives + false positives)
+•Recall (per class) — true positives / (true positives + false negatives)
+•F1-Score (weighted) — harmonic mean of precision and recall
+•Correlation — Pearson correlation between predicted class and self-reported score
+•Confusion Matrix — to visualize class-level prediction errors
+
+
+
+14. Privacy & Ethical Compliance
+14.1 Privacy By Design Principles Applied
+•Proactive not Reactive — privacy built into design from day one, not added after
+•Privacy as the Default — no data is stored beyond what is strictly needed
+•Full Functionality — privacy preservation does not reduce app functionality
+•End-to-End Security — all data stored in app-private internal storage
+•Visibility and Transparency — users informed of exactly what is captured
+•User-Centric — users can stop participation at any time by uninstalling the app
+
+14.2 Data Minimization Checklist
+Requirement	Status	Verified By
+No typed characters stored in any database table or log	REQUIRED	Code Review
+No personally identifiable information collected (name, email, phone number)	REQUIRED	Code Review
+No internet permissions in AndroidManifest.xml	REQUIRED	Manifest Audit
+User ID is researcher-assigned and anonymized (U01, U02...)	REQUIRED	Protocol
+Informed consent obtained from all participants before installation	REQUIRED	Consent Form
+Data used exclusively for academic research purposes	REQUIRED	IRB Protocol
+Participants can withdraw and have their data deleted at any time	REQUIRED	Protocol
+
+
+
+15. Development Plan
+#	Milestone	Timeline	Deliverables	Status
+1	Project Setup & IME Scaffold	Week 1–2	Android project, IME service registered, basic keyboard renders	TODO
+2	Keystroke Capture Engine	Week 3–4	Full KeyEvent capture, pressure, size, no text stored	TODO
+3	Room Database & Storage	Week 4–5	All 5 tables created, DAO operations, async writes verified	TODO
+4	Feature Extraction Module	Week 5–6	All 9 features computed correctly, windowing engine tested	TODO
+5	Stress Label Collection	Week 6	WorkManager popup every 10 min, auto-dismiss, DB write	TODO
+6	TFLite Model Integration	Week 7–8	Model bundled, inference runs on-device, output verified	TODO
+7	Feedback UI & Dashboard	Week 8–9	Notification indicator, trend chart, session stats screen	TODO
+8	Data Export & Sharing	Week 9	CSV export, FileProvider, ShareSheet integration	TODO
+9	Testing & Participant Deployment	Week 10–12	APK distributed, 20+ participants recruited, data collected	TODO
+10	ML Model Training & Evaluation	Week 13–15	Dataset analyzed, all 5 models trained, F1 scores reported	TODO
+
+
+
+16. Success Metrics
+Metric	Target	Minimum Acceptable	Priority
+Number of participants	25–30 participants	20 participants	HIGH
+Data per participant	3 days × 4 hrs/day	2 days × 3 hrs/day	HIGH
+Stress labels collected	> 50 labels per participant	> 30 labels	HIGH
+Best model F1-score	> 75% weighted F1	> 65% weighted F1	HIGH
+Self-report correlation	Pearson r > 0.6	Pearson r > 0.4	MED
+Keystroke logging latency	< 5ms average	< 15ms average	HIGH
+Zero text content stored	100% — zero tolerance	100% — zero tolerance	HIGH
+Participant setup time	< 3 minutes	< 5 minutes	MED
+
+
+End of Product Requirements Document
+MindType Mobile v1.0  |  VIT-AP University  |  March 2026

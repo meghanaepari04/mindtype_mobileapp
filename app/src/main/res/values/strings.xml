@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MindType</string>
+    <string name="ime_name">MindType Keyboard</string>
+    <string name="stress_calm">Calm</string>
+    <string name="stress_mild">Mild Stress</string>
+    <string name="stress_high">High Stress</string>
+    <string name="notification_channel_name">MindType Stress Monitor</string>
+    <string name="export_filename">mindtype_mobile_dataset.csv</string>
+    <string name="privacy_guarantee">No text content is ever stored or transmitted.</string>
+</resources>
