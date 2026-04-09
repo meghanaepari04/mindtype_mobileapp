@@ -5,30 +5,42 @@ df = pd.read_csv("final_mobile_dataset.csv")
 
 print("Before cleaning:", df.shape)
 
-# Remove duplicates
+# -------------------------------
+# REMOVE DUPLICATES (OK)
+# -------------------------------
 df = df.drop_duplicates()
-
-# Remove missing values
-df = df.dropna()
 
 # -------------------------------
 # FIX INF VALUES
 # -------------------------------
 df = df.replace([np.inf, -np.inf], np.nan)
-df = df.dropna()
 
 # -------------------------------
-# APPLY CLIP ONLY TO NUMERIC COLUMNS
+# 🔥 CLASS-WISE MEDIAN IMPUTATION
 # -------------------------------
 numeric_cols = df.select_dtypes(include=[np.number]).columns
-df[numeric_cols] = df[numeric_cols].clip(-1e6, 1e6)
+
+for col in numeric_cols:
+    df[col] = df.groupby("mapped_class")[col].transform(
+        lambda x: x.fillna(x.median())
+    )
 
 # -------------------------------
-# LABEL CHECK
+# OPTIONAL: GLOBAL FILL (SAFETY)
 # -------------------------------
-print("\nLabel Distribution:\n", df["mapped_class"].value_counts())
+df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].median())
 
-# Save cleaned dataset
-df.to_csv("clean_mobile_dataset.csv", index=False)
+# -------------------------------
+# CLIP EXTREME VALUES
+# -------------------------------
+df[numeric_cols] = df[numeric_cols].clip(-1e5, 1e5)
+
+# -------------------------------
+# FINAL CHECK (NO DROPNA ❌)
+# -------------------------------
+print("\nRemaining NaNs:\n", df.isna().sum())
 
 print("\nAfter cleaning:", df.shape)
+
+# Save
+df.to_csv("clean_mobile_dataset.csv", index=False)

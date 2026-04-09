@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from sklearn.model_selection import StratifiedKFold, cross_val_score, GridSearchCV
+from sklearn.model_selection import StratifiedKFold, GridSearchCV, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -11,15 +11,44 @@ from sklearn.pipeline import Pipeline
 # -------------------------------
 df = pd.read_csv("clean_mobile_dataset.csv")
 
-print("Dataset shape:", df.shape)
+print("Dataset shape (before fix):", df.shape)
+
+# -------------------------------
+# 🔥 FIX LABEL INCONSISTENCY (CRITICAL)
+# -------------------------------
+df["mapped_class"] = df["mapped_class"].astype(str).str.lower().str.strip()
+
+df["mapped_class"] = df["mapped_class"].replace({
+    "calm": "Calm",
+    "high_stress": "High_Stress",
+    "mild_stress": "Mild_Stress"
+})
+
+# -------------------------------
+# 🔥 FINAL SAFETY CLEAN
+# -------------------------------
+df = df.replace([np.inf, -np.inf], np.nan)
+
+# Fill labels using predicted_class if needed
+if "predicted_class" in df.columns:
+    df["mapped_class"] = df["mapped_class"].fillna(df["predicted_class"])
+
+# Fill numeric NaNs
+numeric_cols = df.select_dtypes(include=[np.number]).columns
+df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].median())
+
+# Drop only if label missing
+df = df.dropna(subset=["mapped_class"])
+
+print("Dataset shape (after fix):", df.shape)
 print("\nClass distribution:\n", df["mapped_class"].value_counts())
 
 # -------------------------------
-# FEATURE ENGINEERING (NEW)
+# 🔥 FEATURE ENGINEERING
 # -------------------------------
-# Add useful derived features
-df["dwell_flight_ratio"] = df["mean_dwell"] / (df["mean_flight"] + 1e-6)
-df["speed_error_ratio"] = df["typing_speed"] / (df["backspace_rate"] + 1e-6)
+df["combined_behavior"] = (
+    df["mean_dwell"] * df["typing_speed"]
+) / (df["backspace_rate"] + 1e-6)
 
 # -------------------------------
 # FEATURES & LABEL
@@ -33,29 +62,36 @@ X = df[[
     "backspace_rate",
     "pause_count",
     "mean_pressure",
-    "gyro_std",
-    "dwell_flight_ratio",      # NEW
-    "speed_error_ratio"        # NEW
+    "combined_behavior"
 ]]
 
 y = df["mapped_class"]
+
+# -------------------------------
+# CHECK NaNs
+# -------------------------------
+print("\nNaNs in X:\n", pd.DataFrame(X).isna().sum())
+print("\nNaNs in y:\n", pd.Series(y).isna().sum())
 
 # -------------------------------
 # MODEL PIPELINE
 # -------------------------------
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
-    ("rf", RandomForestClassifier(class_weight="balanced", random_state=42))
+    ("rf", RandomForestClassifier(
+        class_weight="balanced",
+        random_state=42
+    ))
 ])
 
 # -------------------------------
-# HYPERPARAMETER TUNING (IMPORTANT)
+# HYPERPARAMETER TUNING
 # -------------------------------
 param_grid = {
-    "rf__n_estimators": [100, 200, 300],
-    "rf__max_depth": [None, 5, 10, 15],
-    "rf__min_samples_split": [2, 5, 10],
-    "rf__min_samples_leaf": [1, 2, 4]
+    "rf__n_estimators": [100, 200],
+    "rf__max_depth": [10, 15],
+    "rf__min_samples_split": [2, 5],
+    "rf__min_samples_leaf": [1, 2]
 }
 
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -78,11 +114,9 @@ print("\nBest Parameters:", grid.best_params_)
 # -------------------------------
 # FINAL EVALUATION
 # -------------------------------
-best_model = grid.best_estimator_
+accuracy = cross_val_score(grid.best_estimator_, X, y, cv=skf, scoring="accuracy")
+f1 = cross_val_score(grid.best_estimator_, X, y, cv=skf, scoring="f1_weighted")
 
-accuracy = cross_val_score(best_model, X, y, cv=skf, scoring="accuracy")
-f1 = cross_val_score(best_model, X, y, cv=skf, scoring="f1_weighted")
-
-print("\nFinal Results:")
+print("\nFINAL RESULTS:")
 print("Accuracy:", np.mean(accuracy))
 print("F1-score:", np.mean(f1))
