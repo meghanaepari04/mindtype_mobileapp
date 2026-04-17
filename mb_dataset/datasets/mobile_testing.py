@@ -1,55 +1,29 @@
 import pandas as pd
 import numpy as np
 
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 from xgboost import XGBClassifier
 
-# -------------------------------------
-# LOAD DATA
-# -------------------------------------
+# LOAD
 df = pd.read_csv("clean_mobile_dataset.csv")
 
-# Remove actual NaNs
 df = df.dropna(subset=["mapped_class"])
-
-# Standardize and remove string representations of 'nan'
 df["mapped_class"] = df["mapped_class"].astype(str).str.lower().str.strip()
 df = df[df["mapped_class"] != "nan"]
 
-# Binary conversion (0 = Calm, 1 = Any Stress)
+# Binary
 df["mapped_class"] = df["mapped_class"].apply(lambda x: 0 if x == "calm" else 1)
 
-# -------------------------------------
-# DATA AUGMENTATION 🔥
-# -------------------------------------
-aug = df.copy()
-
-for col in [
-    "mean_dwell", "std_dwell", "mean_flight",
-    "std_flight", "typing_speed", "backspace_rate"
-]:
-    noise = np.random.normal(0, 0.08, size=len(aug))
-    aug[col] = aug[col] * (1 + noise)
-
-df = pd.concat([df, aug], ignore_index=True)
-
-print("After augmentation:", df.shape)
-
-# -------------------------------------
 # CLEAN
-# -------------------------------------
 df = df.replace([np.inf, -np.inf], np.nan)
 df = df.fillna(df.median(numeric_only=True))
 
-# -------------------------------------
-# SIMPLE STRONG FEATURES ONLY 🔥
-# -------------------------------------
+# FEATURES (simple + stable)
 df["combined_behavior"] = (
     df["mean_dwell"] * df["typing_speed"]
 ) / (df["backspace_rate"] + 1e-6)
 
-# New Feature
 df["dwell_flight_ratio"] = df["mean_dwell"] / (df["mean_flight"] + 1e-6)
 
 X = df[[
@@ -65,53 +39,31 @@ X = df[[
 
 y = df["mapped_class"]
 
-# -------------------------------------
-# SPLIT
-# -------------------------------------
+# STRATIFIED SPLIT (IMPORTANT)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
-    test_size=0.2,
+    test_size=0.3,
     random_state=42,
     stratify=y
 )
 
-# -------------------------------------
-# MODEL (SLIGHTLY STRONGER)
-# -------------------------------------
-# -------------------------------------
-# MODEL TUNING (GridSearchCV)
-# -------------------------------------
-xgb = XGBClassifier(random_state=42, eval_metric="logloss")
+# MODEL (NO BIAS)
+model = XGBClassifier(
+    n_estimators=300,
+    max_depth=4,
+    learning_rate=0.1,
+    eval_metric="logloss",
+    random_state=42
+)
 
-param_grid = {
-    'n_estimators': [100, 300, 500],
-    'max_depth': [3, 4, 6],
-    'learning_rate': [0.01, 0.05, 0.1],
-    'subsample': [0.7, 0.85, 1.0],
-    'colsample_bytree': [0.7, 0.85, 1.0]
-}
+model.fit(X_train, y_train)
 
-print("Running Hyperparameter Tuning (this may take a moment)...")
-grid_search = GridSearchCV(xgb, param_grid, cv=3, scoring='accuracy', n_jobs=-1)
-grid_search.fit(X_train, y_train)
+# DEFAULT THRESHOLD
+y_pred = model.predict(X_test)
 
-best_model = grid_search.best_estimator_
-print("\n🔥 Best Hyperparameters found:")
-print(grid_search.best_params_)
-
-# -------------------------------------
-# PREDICT WITH OPTIMIZED MODEL
-# -------------------------------------
-# We rely on the natural 0.5 threshold which optimizes for pure accuracy in balanced models
-y_pred = best_model.predict(X_test)
-y_prob = best_model.predict_proba(X_test)[:, 1]
-
-# -------------------------------------
 # RESULTS
-# -------------------------------------
-print("\nAccuracy Score:", accuracy_score(y_test, y_pred))
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
 
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
-
-print("\nClassification Report:\n")
-print(classification_report(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
