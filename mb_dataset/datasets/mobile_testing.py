@@ -10,12 +10,15 @@ from xgboost import XGBClassifier
 # -------------------------------------
 df = pd.read_csv("clean_mobile_dataset.csv")
 
-# Remove NaNs
+# Remove actual NaNs
 df = df.dropna(subset=["mapped_class"])
 
-# Binary conversion
-df["mapped_class"] = df["mapped_class"].astype(str).str.strip()
-df["mapped_class"] = df["mapped_class"].apply(lambda x: 0 if x == "Calm" else 1)
+# Standardize and remove string representations of 'nan'
+df["mapped_class"] = df["mapped_class"].astype(str).str.lower().str.strip()
+df = df[df["mapped_class"] != "nan"]
+
+# Binary conversion (0 = Calm, 1 = Any Stress)
+df["mapped_class"] = df["mapped_class"].apply(lambda x: 0 if x == "calm" else 1)
 
 # -------------------------------------
 # DATA AUGMENTATION 🔥

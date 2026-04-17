@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, cross_val_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from xgboost import XGBClassifier
 from sklearn.pipeline import Pipeline
 
 # -------------------------------
@@ -39,6 +39,7 @@ df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].median())
 
 # Drop only if label missing
 df = df.dropna(subset=["mapped_class"])
+df = df[df["mapped_class"] != "nan"]
 
 print("Dataset shape (after fix):", df.shape)
 print("\nClass distribution:\n", df["mapped_class"].value_counts())
@@ -65,7 +66,11 @@ X = df[[
     "combined_behavior"
 ]]
 
-y = df["mapped_class"]
+y_raw = df["mapped_class"]
+
+# XGBoost requires numerical classes (0, 1, 2)
+le = LabelEncoder()
+y = le.fit_transform(y_raw)
 
 # -------------------------------
 # CHECK NaNs
@@ -78,9 +83,9 @@ print("\nNaNs in y:\n", pd.Series(y).isna().sum())
 # -------------------------------
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
-    ("rf", RandomForestClassifier(
-        class_weight="balanced",
-        random_state=42
+    ("xgb", XGBClassifier(
+        random_state=42,
+        eval_metric='mlogloss'
     ))
 ])
 
@@ -88,10 +93,9 @@ pipeline = Pipeline([
 # HYPERPARAMETER TUNING
 # -------------------------------
 param_grid = {
-    "rf__n_estimators": [50, 100],
-    "rf__max_depth": [3, 5, 7],
-    "rf__min_samples_split": [5, 10],
-    "rf__min_samples_leaf": [2, 4]
+    "xgb__n_estimators": [100, 200, 300],
+    "xgb__max_depth": [5, 7, 9],
+    "xgb__learning_rate": [0.01, 0.05, 0.1]
 }
 
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
