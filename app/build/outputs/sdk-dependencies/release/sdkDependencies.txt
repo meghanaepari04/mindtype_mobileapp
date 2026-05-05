@@ -936,79 +936,15 @@ library {
 }
 library {
   maven_library {
-    groupId: "org.tensorflow"
-    artifactId: "tensorflow-lite"
-    version: "2.14.0"
+    groupId: "com.microsoft.onnxruntime"
+    artifactId: "onnxruntime-android"
+    version: "1.17.0"
   }
   digests {
-    sha256: "p\235\270\037\277\272F\033\036\322~\234\036\203\201|-|\306\004i\aN\2526\310\217\270\333\352H\206"
+    sha256: "N\027\024\217\355\355\277\364\263\327v]\"\354\235\036\205~\3201PlH\255\364\365a\356d<\207\312"
   }
   repo_index {
     value: 1
-  }
-}
-library {
-  maven_library {
-    groupId: "org.tensorflow"
-    artifactId: "tensorflow-lite-api"
-    version: "2.14.0"
-  }
-  digests {
-    sha256: "\035\037\377\376\235\025\226\230\202\310V$\2320\030\314\322\031\223\031\341\225\246;{Xi\237\310\313\203o"
-  }
-  repo_index {
-    value: 1
-  }
-}
-library {
-  maven_library {
-    groupId: "org.tensorflow"
-    artifactId: "tensorflow-lite-support"
-    version: "0.4.4"
-  }
-  digests {
-    sha256: "\034\035\020\270\316\310^\373\350\002NuVA\313\004O\037\020\342\004\333w?\206\2142}9\217\305\372"
-  }
-  repo_index {
-    value: 1
-  }
-}
-library {
-  maven_library {
-    groupId: "org.tensorflow"
-    artifactId: "tensorflow-lite-support-api"
-    version: "0.4.4"
-  }
-  digests {
-    sha256: "\a$\201\367\363\202 t\231j\006\257\261\327\204\357\330(s\031\263\216>HW+\262\231\a\222\230\344"
-  }
-  repo_index {
-    value: 1
-  }
-}
-library {
-  maven_library {
-    groupId: "org.checkerframework"
-    artifactId: "checker-qual"
-    version: "2.5.8"
-  }
-  digests {
-    sha256: "\275e]\2455\337\036\353\226\374\210t\320]\017p) \235\351P\226\344\370K\320|fh\212!\r"
-  }
-  repo_index {
-    value: 1
-  }
-}
-library {
-  maven_library {
-    groupId: "com.google.android.odml"
-    artifactId: "image"
-    version: "1.0.0-beta1"
-  }
-  digests {
-    sha256: ".q\2521\370:\224\025\'\177\021\235\346q\225ro\a\321v\016\225B\301\021w\2142\016:\241\362"
-  }
-  repo_index {
   }
 }
 library {
@@ -1674,22 +1610,7 @@ library_dependencies {
   library_dep_index: 76
 }
 library_dependencies {
-  library_index: 78
-  library_dep_index: 79
-}
-library_dependencies {
-  library_index: 80
-  library_dep_index: 81
-  library_dep_index: 78
-}
-library_dependencies {
-  library_index: 81
-  library_dep_index: 82
-  library_dep_index: 79
-  library_dep_index: 83
-}
-library_dependencies {
-  library_index: 84
+  library_index: 79
   library_dep_index: 1
 }
 module_dependencies {
@@ -1707,8 +1628,7 @@ module_dependencies {
   dependency_index: 73
   dependency_index: 76
   dependency_index: 78
-  dependency_index: 80
-  dependency_index: 84
+  dependency_index: 79
   dependency_index: 19
   dependency_index: 41
   dependency_index: 53

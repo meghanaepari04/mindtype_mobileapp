@@ -1,85 +1,104 @@
 package com.mindtype.mobile.ml
 
 import android.content.Context
-import org.tensorflow.lite.Interpreter
-import java.io.FileInputStream
-import java.nio.MappedByteBuffer
-import java.nio.channels.FileChannel
+import ai.onnxruntime.OnnxTensor
+import ai.onnxruntime.OrtEnvironment
+import ai.onnxruntime.OrtSession
+import java.nio.FloatBuffer
 
-enum class StressLevel { CALM, MILD_STRESS, HIGH_STRESS }
+enum class StressLevel { CALM, STRESSED }
 
 /**
- * Wraps the TensorFlow Lite model for on-device stress classification.
- * Input:  FloatArray[9]  — the 9 behavioral features (in order from FeatureExtractor)
- * Output: FloatArray[3]  — softmax probabilities [Calm, Mild_Stress, High_Stress]
+ * Wraps the ONNX Runtime model for on-device binary stress classification.
+ * Input:  FloatArray[8]  — 8 behavioral features:
+ *   mean_dwell, std_dwell, mean_flight, std_flight,
+ *   typing_speed, backspace_rate, combined_behavior, dwell_flight_ratio
+ * Output: 0 = CALM, 1 = STRESSED
+ *
+ * Feature engineering (must match train_and_export.py):
+ *   combined_behavior  = (mean_dwell * typing_speed) / (backspace_rate + 1e-6)
+ *   dwell_flight_ratio = mean_dwell / (mean_flight + 1e-6)
  */
 class StressClassifier(private val context: Context) {
 
-    private var interpreter: Interpreter? = null
+    private var ortEnv: OrtEnvironment? = null
+    private var ortSession: OrtSession? = null
 
     init {
         try {
-            val model = loadModelFile()
-            interpreter = Interpreter(model, Interpreter.Options().apply { setNumThreads(2) })
+            ortEnv = OrtEnvironment.getEnvironment()
+            val modelBytes = context.assets.open("mindtype_model.onnx").readBytes()
+            ortSession = ortEnv!!.createSession(modelBytes, OrtSession.SessionOptions())
         } catch (e: Exception) {
-            // Model placeholder may not be a real TFLite model yet — fail gracefully
-            interpreter = null
+            ortSession = null
         }
     }
 
+    /**
+     * Classify stress from the 9 raw features produced by FeatureExtractor.
+     * Internally computes the 2 engineered features and feeds 8 features to the model.
+     */
     fun classify(features: FloatArray): StressLevel {
-        interpreter?.let { interp ->
+        // features[0..8] = mean_dwell, std_dwell, mean_flight, std_flight,
+        //                   typing_speed, backspace_rate, pause_count,
+        //                   mean_pressure, gyro_std
+
+        val meanDwell     = features[0]
+        val meanFlight    = features[2]
+        val typingSpeed   = features[4]
+        val backspaceRate = features[5]
+
+        // Compute engineered features (same formula as train_and_export.py)
+        val combinedBehavior  = (meanDwell * typingSpeed) / (backspaceRate + 1e-6f)
+        val dwellFlightRatio  = meanDwell / (meanFlight + 1e-6f)
+
+        // Build 8-feature input vector
+        val input = floatArrayOf(
+            meanDwell, features[1], meanFlight, features[3],
+            typingSpeed, backspaceRate,
+            combinedBehavior, dwellFlightRatio
+        )
+
+        ortSession?.let { session ->
             try {
-                val input = arrayOf(features)
-                val output = Array(1) { FloatArray(3) }
-                interp.run(input, output)
-                val probs = output[0]
-                return when (probs.indices.maxByOrNull { probs[it] } ?: 0) {
-                    0 -> StressLevel.CALM
-                    1 -> StressLevel.MILD_STRESS
-                    else -> StressLevel.HIGH_STRESS
-                }
+                val env = ortEnv ?: return heuristic(features)
+                val inputName = session.inputNames.iterator().next()
+                val tensor = OnnxTensor.createTensor(
+                    env,
+                    FloatBuffer.wrap(input),
+                    longArrayOf(1, 8)
+                )
+                val result = session.run(mapOf(inputName to tensor))
+                val label = (result[0].value as LongArray)[0]
+                tensor.close()
+                result.close()
+                return if (label == 0L) StressLevel.CALM else StressLevel.STRESSED
             } catch (e: Exception) {
-                // Ignore failure and fall through to heuristic algorithm
+                // Fall through to heuristic
             }
         }
 
-        // --- DYNAMIC DEMO HEURISTIC ALGORITHM ---
-        // Lowered thresholds to ensure the UI graph shows VARIATION during testing!
-        val speedKPM = features[4]
-        val backspaceRate = features[5]
-        val gyroStd = features[8]
-
-        var stressScore = 0
-
-        // 1. Error rate (Very sensitive!)
-        if (backspaceRate > 0.08f) stressScore += 3 // Automatic high
-        else if (backspaceRate > 0.04f) stressScore += 1
-
-        // 2. Physical tremor (Detect even subtle shakes)
-        if (gyroStd > 1.2f) stressScore += 2
-        else if (gyroStd > 0.4f) stressScore += 1
-
-        // 3. Typing speed variation
-        if (speedKPM > 140f || (speedKPM < 40f && speedKPM > 5f)) stressScore += 1
-
-        return when {
-            stressScore >= 3 -> StressLevel.HIGH_STRESS
-            stressScore >= 1 -> StressLevel.MILD_STRESS
-            else -> StressLevel.CALM
-        }
+        return heuristic(features)
     }
 
-    private fun loadModelFile(): MappedByteBuffer {
-        val assetFileDescriptor = context.assets.openFd("mindtype_model.tflite")
-        val inputStream = FileInputStream(assetFileDescriptor.fileDescriptor)
-        val fileChannel = inputStream.channel
-        val startOffset = assetFileDescriptor.startOffset
-        val declaredLength = assetFileDescriptor.declaredLength
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    /** Fallback heuristic when ONNX model is unavailable */
+    private fun heuristic(features: FloatArray): StressLevel {
+        val backspaceRate = features[5]
+        val gyroStd = features[8]
+        val speedKPM = features[4]
+
+        var score = 0
+        if (backspaceRate > 0.08f) score += 3
+        else if (backspaceRate > 0.04f) score += 1
+        if (gyroStd > 1.2f) score += 2
+        else if (gyroStd > 0.4f) score += 1
+        if (speedKPM > 140f || (speedKPM < 40f && speedKPM > 5f)) score += 1
+
+        return if (score >= 2) StressLevel.STRESSED else StressLevel.CALM
     }
 
     fun close() {
-        interpreter?.close()
+        ortSession?.close()
+        ortEnv?.close()
     }
 }

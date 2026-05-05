@@ -1,12 +1,17 @@
 package com.mindtype.mobile.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.mindtype.mobile.R
 import com.mindtype.mobile.data.AppDatabase
 import com.mindtype.mobile.databinding.ActivityMainBinding
@@ -65,14 +70,14 @@ class MainActivity : AppCompatActivity() {
             (endMs - it.startTime) / 60_000L
         } ?: 0L
 
-        val avgStress = windows.mapNotNull { w ->
+        val stressValues = windows.mapNotNull { w ->
             when (w.predictedClass) {
                 "CALM" -> 1f
-                "MILD_STRESS" -> 2f
-                "HIGH_STRESS" -> 3f
+                "STRESSED" -> 2f
                 else -> null
             }
-        }.average().let { if (it.isNaN()) 0.0 else it }
+        }
+        val avgStress = stressValues.average().let { if (it.isNaN()) 0.0 else it }
 
         val currentLevel = MindTypeIMEService.currentStressLevel
 
@@ -85,49 +90,142 @@ class MainActivity : AppCompatActivity() {
             // Current stress dot
             val (color, label) = when (currentLevel) {
                 StressLevel.CALM -> Pair(getColor(R.color.stress_calm), "🟢 Calm")
-                StressLevel.MILD_STRESS -> Pair(getColor(R.color.stress_mild), "🟡 Mild")
-                StressLevel.HIGH_STRESS -> Pair(getColor(R.color.stress_high), "🔴 Alert")
+                StressLevel.STRESSED -> Pair(getColor(R.color.stress_high), "🔴 Stressed")
             }
             binding.tvCurrentStress.text = label
             binding.tvCurrentStress.setTextColor(color)
 
-            // Build stress trend chart
-            if (windows.isNotEmpty()) {
-                val entries = windows.mapIndexed { i, w ->
-                    val y = when (w.predictedClass) {
-                        "CALM" -> 1f
-                        "MILD_STRESS" -> 2f
-                        "HIGH_STRESS" -> 3f
-                        else -> 0f
+            // Avg score badge on chart card
+            binding.tvChartAvgScore.text = "AVG: %.2f".format(avgStress)
+
+            // Build interactive stress trend chart
+            buildStressChart(stressValues, avgStress.toFloat())
+        }
+    }
+
+    private fun buildStressChart(stressValues: List<Float>, avgScore: Float) {
+        val cyanColor = getColor(R.color.chart_cyan)
+        val cyanFill      = getColor(R.color.chart_cyan_fill)
+        val avgColor      = getColor(R.color.chart_avg_line)
+        val axisTextColor = getColor(R.color.text_medium_emphasis)
+
+        if (stressValues.isEmpty()) {
+            binding.stressChart.clear()
+            binding.stressChart.setNoDataText("No stress data yet — start typing!")
+            binding.stressChart.setNoDataTextColor(axisTextColor)
+            binding.stressChart.invalidate()
+            return
+        }
+
+        // Main stress line entries
+        val entries = stressValues.mapIndexed { i, v -> Entry(i.toFloat(), v) }
+
+        val dataSet = LineDataSet(entries, "Stress Level").apply {
+            setColor(cyanColor)
+            setCircleColor(cyanColor)
+            lineWidth = 2.5f
+            circleRadius = 3.5f
+            setDrawCircles(true)
+            setDrawCircleHole(true)
+            circleHoleColor = getColor(R.color.primary_surface)
+            circleHoleRadius = 2f
+            setDrawFilled(true)
+            fillColor = cyanColor
+            fillAlpha = 50
+            setDrawValues(false)
+            mode = LineDataSet.Mode.CUBIC_BEZIER
+            cubicIntensity = 0.2f
+
+            // Highlight on touch
+            highLightColor = cyanColor
+            highlightLineWidth = 1.5f
+            setDrawHorizontalHighlightIndicator(false)
+            enableDashedHighlightLine(10f, 5f, 0f)
+        }
+
+        binding.stressChart.apply {
+            data = LineData(dataSet)
+            description.isEnabled = false
+            legend.isEnabled = false
+
+            // Interactive
+            setTouchEnabled(true)
+            isDragEnabled = true
+            setScaleEnabled(true)
+            setPinchZoom(true)
+
+            // Background
+            setDrawGridBackground(false)
+            setBackgroundColor(Color.TRANSPARENT)
+
+            // Extra padding for axis labels
+            extraBottomOffset = 12f
+            extraLeftOffset = 8f
+
+            // ─── X Axis (bottom) — "Window #" ───────────────
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(true)
+                gridColor = Color.parseColor("#1AFFFFFF")  // subtle grid
+                gridLineWidth = 0.5f
+                setTextColor(axisTextColor)
+                textSize = 11f
+                granularity = 1f
+                labelRotationAngle = 0f
+                setDrawAxisLine(true)
+                axisLineColor = axisTextColor
+                axisLineWidth = 1f
+
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return "W${value.toInt() + 1}"
                     }
-                    Entry(i.toFloat(), y)
-                }
-                val dataSet = LineDataSet(entries, "Behavioral Trend").apply {
-                    setColor(getColor(R.color.primary_accent))
-                    setCircleColor(getColor(R.color.primary_accent))
-                    lineWidth = 3f
-                    circleRadius = 4f
-                    setDrawCircles(true)
-                    setDrawCircleHole(false)
-                    setDrawFilled(true)
-                    fillColor = getColor(R.color.primary_accent)
-                    fillAlpha = 20
-                    setDrawValues(false)
-                    mode = LineDataSet.Mode.CUBIC_BEZIER
-                }
-                
-                binding.stressChart.apply {
-                    data = LineData(dataSet)
-                    description.isEnabled = false
-                    legend.isEnabled = false
-                    xAxis.isEnabled = false
-                    axisLeft.isEnabled = false
-                    axisRight.isEnabled = false
-                    setDrawGridBackground(false)
-                    setTouchEnabled(false)
-                    invalidate()
                 }
             }
+
+            // ─── Y Axis (left) — "Stress Level" ─────────────
+            axisLeft.apply {
+                setDrawGridLines(true)
+                gridColor = Color.parseColor("#1AFFFFFF")
+                gridLineWidth = 0.5f
+                setTextColor(axisTextColor)
+                textSize = 11f
+                axisMinimum = 0.5f
+                axisMaximum = 2.5f
+                granularity = 1f
+                setDrawAxisLine(true)
+                axisLineColor = axisTextColor
+                axisLineWidth = 1f
+                setLabelCount(2, true)
+
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return when (value.toInt()) {
+                            1 -> "Calm"
+                            2 -> "Stressed"
+                            else -> ""
+                        }
+                    }
+                }
+
+                // Avg score horizontal limit line
+                removeAllLimitLines()
+                val avgLine = LimitLine(avgScore, "Avg: %.2f".format(avgScore)).apply {
+                    lineColor = avgColor
+                    lineWidth = 1.5f
+                    setTextColor(avgColor)
+                    textSize = 10f
+                    labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                    enableDashedLine(15f, 8f, 0f)
+                }
+                addLimitLine(avgLine)
+            }
+
+            axisRight.isEnabled = false
+
+            // Animate
+            animateX(800)
+            invalidate()
         }
     }
 }

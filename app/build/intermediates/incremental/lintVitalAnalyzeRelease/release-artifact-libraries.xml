@@ -681,23 +681,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="org.tensorflow:tensorflow-lite-support:0.4.4@aar"
-      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/5c8838a055c3ff14e89e7d4d2b7214b8/transformed/tensorflow-lite-support-0.4.4/jars/classes.jar"
-      resolved="org.tensorflow:tensorflow-lite-support:0.4.4"
-      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/5c8838a055c3ff14e89e7d4d2b7214b8/transformed/tensorflow-lite-support-0.4.4"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
-      name="org.tensorflow:tensorflow-lite:2.14.0@aar"
-      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/f7736b3a5279bf082f1125d6013771e0/transformed/tensorflow-lite-2.14.0/jars/classes.jar"
-      resolved="org.tensorflow:tensorflow-lite:2.14.0"
-      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/f7736b3a5279bf082f1125d6013771e0/transformed/tensorflow-lite-2.14.0"
+      name="com.microsoft.onnxruntime:onnxruntime-android:1.17.0@aar"
+      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/585f4be3938a7946b126bab3dc307a93/transformed/onnxruntime-android-1.17.0/jars/classes.jar"
+      resolved="com.microsoft.onnxruntime:onnxruntime-android:1.17.0"
+      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/585f4be3938a7946b126bab3dc307a93/transformed/onnxruntime-android-1.17.0"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -744,49 +731,6 @@
       name="androidx.resourceinspection:resourceinspection-annotation:1.0.1@jar"
       jars="/Users/meghanaepari/.gradle/caches/modules-2/files-2.1/androidx.resourceinspection/resourceinspection-annotation/1.0.1/8c21f8ff5d96d5d52c948707f7e4d6ca6773feef/resourceinspection-annotation-1.0.1.jar"
       resolved="androidx.resourceinspection:resourceinspection-annotation:1.0.1"/>
-  <library
-      name="org.tensorflow:tensorflow-lite-support-api:0.4.4@aar"
-      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/acfdfb00e303e28cf5a8eb40fa7d680e/transformed/tensorflow-lite-support-api-0.4.4/jars/classes.jar"
-      resolved="org.tensorflow:tensorflow-lite-support-api:0.4.4"
-      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/acfdfb00e303e28cf5a8eb40fa7d680e/transformed/tensorflow-lite-support-api-0.4.4"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
-      name="org.tensorflow:tensorflow-lite-api:2.14.0@aar"
-      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/725ead0d704c8fbd84dc639362f4957f/transformed/tensorflow-lite-api-2.14.0/jars/classes.jar"
-      resolved="org.tensorflow:tensorflow-lite-api:2.14.0"
-      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/725ead0d704c8fbd84dc639362f4957f/transformed/tensorflow-lite-api-2.14.0"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
-      name="org.checkerframework:checker-qual:2.5.8@jar"
-      jars="/Users/meghanaepari/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/2.5.8/41c6fa63cba0fea55ebd3581d42b3d2c5cca98b2/checker-qual-2.5.8.jar"
-      resolved="org.checkerframework:checker-qual:2.5.8"/>
-  <library
-      name="com.google.android.odml:image:1.0.0-beta1@aar"
-      jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/a3f6228df3e21b696c75d2bd635e6e89/transformed/image-1.0.0-beta1/jars/classes.jar"
-      resolved="com.google.android.odml:image:1.0.0-beta1"
-      folder="/Users/meghanaepari/.gradle/caches/8.13/transforms/a3f6228df3e21b696c75d2bd635e6e89/transformed/image-1.0.0-beta1"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
   <library
       name="androidx.emoji2:emoji2-views-helper:1.2.0@aar"
       jars="/Users/meghanaepari/.gradle/caches/8.13/transforms/ee40d26ee7e6b30edd8750a6544ab34a/transformed/emoji2-views-helper-1.2.0/jars/classes.jar"

@@ -32,6 +32,10 @@
         "source": "com.mindtype.mobile.app-main-46:/mipmap/ic_launcher_round.xml"
     },
     {
+        "merged": "com.mindtype.mobile.app-release-45:/xml_keys_emoji.xml.flat",
+        "source": "com.mindtype.mobile.app-main-46:/xml/keys_emoji.xml"
+    },
+    {
         "merged": "com.mindtype.mobile.app-release-45:/xml_file_provider_paths.xml.flat",
         "source": "com.mindtype.mobile.app-main-46:/xml/file_provider_paths.xml"
     },

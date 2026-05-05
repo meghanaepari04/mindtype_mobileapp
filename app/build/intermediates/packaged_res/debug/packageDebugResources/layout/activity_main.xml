@@ -206,19 +206,40 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Stress Trend (24h)"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/text_high_emphasis" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Stress Trend (24h)"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/text_high_emphasis" />
+
+                        <TextView
+                            android:id="@+id/tvChartAvgScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AVG: —"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/chart_cyan"
+                            android:background="@drawable/card_glass_bg"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="4dp" />
+
+                    </LinearLayout>
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/stressChart"
                         android:layout_width="match_parent"
-                        android:layout_height="280dp"
-                        android:layout_marginTop="16dp" />
+                        android:layout_height="300dp"
+                        android:layout_marginTop="12dp" />
 
                 </LinearLayout>
 

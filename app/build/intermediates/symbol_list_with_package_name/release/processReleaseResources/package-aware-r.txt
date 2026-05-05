@@ -1373,6 +1373,9 @@ color cardview_dark_background
 color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
+color chart_avg_line
+color chart_cyan
+color chart_cyan_fill
 color colorAccent
 color colorPrimary
 color colorPrimaryDark
@@ -3585,6 +3588,7 @@ id transition_scene_layoutid_cache
 id transition_transform
 id triangle
 id tvAvgStress
+id tvChartAvgScore
 id tvCurrentStress
 id tvCurrentUserId
 id tvDescription
@@ -5262,6 +5266,7 @@ styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
 xml file_provider_paths
+xml keys_emoji
 xml keys_layout
 xml keys_numbers
 xml keys_symbols

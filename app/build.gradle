@@ -38,7 +38,15 @@ android {
     }
 
     aaptOptions {
-        noCompress "tflite"
+        noCompress "onnx"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
     }
 }
 
@@ -62,9 +70,8 @@ dependencies {
     // WorkManager
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
 
-    // TensorFlow Lite
-    implementation 'org.tensorflow:tensorflow-lite:2.14.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.4'
+    // ONNX Runtime
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.17.0'
 
     // MPAndroidChart for stress trend graph
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

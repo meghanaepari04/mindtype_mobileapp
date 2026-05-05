@@ -29,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-enum class KeyboardMode { ALPHA, NUMBERS, SYMBOLS }
+enum class KeyboardMode { ALPHA, NUMBERS, SYMBOLS, EMOJI }
 
 class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionListener {
 
@@ -43,6 +43,7 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
         const val CODE_SWITCH_NUMBERS  = -2
         const val CODE_SWITCH_ALPHA    = -10
         const val CODE_SWITCH_SYMBOLS  = -11
+        const val CODE_SWITCH_EMOJI    = -12
         const val CODE_SHIFT           = -1
     }
 
@@ -106,10 +107,12 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
             KeyboardMode.ALPHA   -> R.xml.keys_layout
             KeyboardMode.NUMBERS -> R.xml.keys_numbers
             KeyboardMode.SYMBOLS -> R.xml.keys_symbols
+            KeyboardMode.EMOJI   -> R.xml.keys_emoji
         }
         val kb = Keyboard(this, xmlRes)
         if (mode == KeyboardMode.ALPHA) kb.isShifted = isShifted
         keyboardView.keyboard = kb
+        updateEnterKeyLabel(currentInputEditorInfo)
         keyboardView.invalidateAllKeys()
     }
 
@@ -120,6 +123,21 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
         // Return to alpha on new input field
         if (::keyboardView.isInitialized) {
             loadKeyboard(KeyboardMode.ALPHA)
+        }
+    }
+
+    private fun updateEnterKeyLabel(attribute: EditorInfo?) {
+        if (!::keyboardView.isInitialized) return
+        val action = attribute?.imeOptions?.and(EditorInfo.IME_MASK_ACTION) ?: android.view.inputmethod.EditorInfo.IME_ACTION_NONE
+        val enterKey = keyboardView.keyboard?.keys?.find { it.codes.firstOrNull() == Keyboard.KEYCODE_DONE }
+        if (enterKey != null) {
+            enterKey.label = when (action) {
+                android.view.inputmethod.EditorInfo.IME_ACTION_GO -> "Go"
+                android.view.inputmethod.EditorInfo.IME_ACTION_NEXT -> "Next"
+                android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH -> "🔍"
+                android.view.inputmethod.EditorInfo.IME_ACTION_SEND -> "Send"
+                else -> "↵"
+            }
         }
     }
 
@@ -142,6 +160,7 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
             CODE_SWITCH_NUMBERS -> { Log.d(TAG, "→ Mode: NUMBERS"); loadKeyboard(KeyboardMode.NUMBERS); return }
             CODE_SWITCH_ALPHA   -> { Log.d(TAG, "→ Mode: ALPHA");   isShifted = false; loadKeyboard(KeyboardMode.ALPHA); return }
             CODE_SWITCH_SYMBOLS -> { Log.d(TAG, "→ Mode: SYMBOLS"); loadKeyboard(KeyboardMode.SYMBOLS); return }
+            CODE_SWITCH_EMOJI   -> { Log.d(TAG, "→ Mode: EMOJI"); loadKeyboard(KeyboardMode.EMOJI); return }
             CODE_SHIFT -> {
                 isShifted = !isShifted
                 Log.d(TAG, "Shift toggled: isShifted=$isShifted")
@@ -167,10 +186,21 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
         val ic = currentInputConnection ?: return
         when (primaryCode) {
             Keyboard.KEYCODE_DELETE -> ic.deleteSurroundingText(1, 0)
-            Keyboard.KEYCODE_DONE  -> ic.performEditorAction(EditorInfo.IME_ACTION_DONE)
+            Keyboard.KEYCODE_DONE -> {
+                val action = currentInputEditorInfo?.imeOptions?.and(android.view.inputmethod.EditorInfo.IME_MASK_ACTION) ?: android.view.inputmethod.EditorInfo.IME_ACTION_NONE
+                when (action) {
+                    android.view.inputmethod.EditorInfo.IME_ACTION_NONE,
+                    android.view.inputmethod.EditorInfo.IME_ACTION_UNSPECIFIED -> {
+                        ic.sendKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, android.view.KeyEvent.KEYCODE_ENTER))
+                        ic.sendKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_UP, android.view.KeyEvent.KEYCODE_ENTER))
+                    }
+                    else -> ic.performEditorAction(action)
+                }
+            }
             else -> {
                 val char = when {
                     isShifted && primaryCode in 97..122 -> primaryCode.toChar().uppercaseChar().toString()
+                    primaryCode > Character.MAX_VALUE.code -> String(Character.toChars(primaryCode))
                     else -> primaryCode.toChar().toString()
                 }
                 ic.commitText(char, 1)
@@ -243,9 +273,8 @@ class MindTypeIMEService : InputMethodService(), KeyboardView.OnKeyboardActionLi
 
     private fun buildNotification(level: StressLevel): Notification {
         val (emoji, label) = when (level) {
-            StressLevel.CALM       -> Pair("🟢", "Calm")
-            StressLevel.MILD_STRESS -> Pair("🟡", "Mild Stress")
-            StressLevel.HIGH_STRESS -> Pair("🔴", "High Stress")
+            StressLevel.CALM     -> Pair("🟢", "Calm")
+            StressLevel.STRESSED -> Pair("🔴", "Stressed")
         }
         val intent = Intent(this, MainActivity::class.java)
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)

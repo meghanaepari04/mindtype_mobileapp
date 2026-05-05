@@ -32,10 +32,7 @@ class DataExporter(private val context: Context) {
         // Map window_id → stress label (match by closest timestamp)
         val labelMap = labels.associateBy { it.timestamp }
 
-        val file = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            "mindtype_mobile_dataset.csv"
-        )
+        val file = File(context.filesDir, "mindtype_mobile_dataset.csv")
 
         FileWriter(file).use { writer ->
             // Header
